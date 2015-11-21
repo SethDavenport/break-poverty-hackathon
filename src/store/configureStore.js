@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import { devTools } from 'redux-devtools';
+// import { devTools } from 'redux-devtools';
 import { reduxReactRouter } from 'redux-router';
 import history from './history';
 
@@ -17,7 +17,7 @@ function configureStore(initialState, routes) {
       logger,
     ),
     reduxReactRouter({ routes, history }),
-    devTools(),
+    // devTools(),
   )(createStore)(rootReducer, initialState);
 
   if (module.hot) {
