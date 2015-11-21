@@ -1,6 +1,7 @@
 'use strict';
 
 const XError = require('x-error');
+const winston = require('winston');
 
 module.exports = {
   assertRequired: assertRequired,
@@ -17,6 +18,8 @@ function assertRequired(payload, fieldName) {
 
 function errorHandler(res) {
   return function (error) {
+    winston.error(error);
+
     // TODO: not the right way to handle unknown errors in nodejs!
     res.status(error.httpCode || 500)
       .send(error.httpResponse || 'Internal server error');
