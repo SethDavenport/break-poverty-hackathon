@@ -1,13 +1,11 @@
 'use strict';
 
-const MongoClient = require('mongodb').MongoClient;
 const uuid = require('uuid');
 const XError = require('x-error');
+const getDb = require('../db');
 const u = require('../utils');
 
 const COLLECTION_NAME = 'people';
-let connectPromise = MongoClient.connect(
-  process.env.MONGOLAB_URI || 'mongodb://localhost/break-poverty-hackathon');
 
 module.exports = {
   getPersonById: getPersonById,
@@ -17,7 +15,7 @@ module.exports = {
 };
 
 function getPersonById(id) {
-  return connectPromise
+  return getDb()
     .then(db => db.collection(COLLECTION_NAME).findOne({ _id: id }))
     .then(person => {
       if (!person) {
@@ -32,7 +30,7 @@ function getPersonById(id) {
 
 function upsertPerson(person) {
   const id = person._id || uuid.v4();
-  return connectPromise
+  return getDb()
     .then(db => {
       return db.collection(COLLECTION_NAME).update(
         { _id: id },
@@ -45,12 +43,12 @@ function upsertPerson(person) {
 }
 
 function removePerson(id) {
-  return connectPromise
+  return getDb()
     .then(db => db.collection(COLLECTION_NAME).remove({ _id: id }, 1));
 }
 
 function listPeople() {
-  return connectPromise
+  return getDb()
     .then(db => {
       return db.collection(COLLECTION_NAME)
         .find()

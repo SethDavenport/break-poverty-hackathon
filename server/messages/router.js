@@ -5,6 +5,7 @@ const controller = require('./controller');
 const router = new express.Router();
 module.exports = router;
 
+router.get('/byuser/:id', controller.getMessageHistoryForPerson);
 router.post('/byuser/:id', bodyParser.json(), controller.sendMessageToUser);
 router.post('/incoming',
   bodyParser.urlencoded({ extended: false }),
