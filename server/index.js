@@ -11,7 +11,7 @@ app.get('/', function(req, res) {
   res.sendFile(path.normalize(path.join(__dirname, '..', 'index.html')));
 });
 
-app.listen(PORT, 'localhost', function(err) {
+app.listen(PORT, '0.0.0.0', function(err) {
   if (err) {
     // TODO: fix node error handling.
     winston.error(err);
