@@ -7,8 +7,7 @@ module.exports = router;
 
 router.post('/byuser/:id', bodyParser.json(), controller.sendMessageToUser);
 router.post('/incoming',
-  //bodyParser.urlencoded({ extended: false }),
-  bodyParser.json(),
+  bodyParser.urlencoded({ extended: false }),
   controller.receiveIncomingMessage);
 
 router.use('*', function (req, res) {
