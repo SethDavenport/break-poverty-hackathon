@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const winston = require('winston');
 const people = require('./people/router');
+const messages = require('./messages/router');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,6 +16,7 @@ app.get('/', function(req, res) {
 
 // Serve the REST API.
 app.use('/api/people', people);
+app.use('/api/messages', messages);
 
 app.listen(PORT, '0.0.0.0', function(err) {
   if (err) {
