@@ -15,7 +15,8 @@ if (!senderNumber) throw new Error('process.env.TWILIO_SENDER_NUMBER not set');
 var client = twilio(accountSid, authToken);
 
 module.exports = {
-  sendMessageToUser: sendMessageToUser
+  sendMessageToUser: sendMessageToUser,
+  receiveIncomingMessage: receiveIncomingMessage
 };
 
 function sendMessageToUser(req, res) {
@@ -30,3 +31,8 @@ function sendMessageToUser(req, res) {
     .then(message => res.status(201).send(''))
     .then(null, u.errorHandler(res));
 };
+
+function receiveIncomingMessage(req, res) {
+  console.log(req.body);
+  res.send('OK, got your message');
+}
