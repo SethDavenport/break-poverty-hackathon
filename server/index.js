@@ -18,5 +18,5 @@ app.listen(PORT, 'localhost', function(err) {
     return;
   }
 
-  winston.error(`Listening at http://localhost:${ PORT }`);
+  winston.info(`Listening at http://localhost:${ PORT }`);
 });
