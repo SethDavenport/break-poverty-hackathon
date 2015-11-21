@@ -1,11 +1,14 @@
 const express = require('express');
-const jsonParser = require('body-parser').json();
+const bodyParser = require('body-parser');
 const controller = require('./controller');
 
 const router = new express.Router();
 module.exports = router;
 
-router.post('/byuser/:id', jsonParser, controller.sendMessageToUser);
+router.post('/byuser/:id', bodyParser.json(), controller.sendMessageToUser);
+router.post('/incoming',
+  bodyParser.urlencoded({ extended: false }),
+  controller.receiveIncomingMessage);
 
 router.use('*', function (req, res) {
   res.status('404').send('Not found');
