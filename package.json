@@ -13,7 +13,8 @@
     "cover": "istanbul cover _mocha -- --opts ./mocha.opts src/**/*.test.js",
     "test": "mocha --opts ./mocha.opts src/**/*.test.js",
     "test:watch": "npm run test -- --watch",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "postinstall": "webpack -p"
   },
   "keywords": [
     "react",
