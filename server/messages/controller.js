@@ -33,6 +33,6 @@ function sendMessageToUser(req, res) {
 };
 
 function receiveIncomingMessage(req, res) {
-  console.log(req.body);
+  console.log('INCOMING!!!!', req.body);
   res.send('OK, got your message');
 }
