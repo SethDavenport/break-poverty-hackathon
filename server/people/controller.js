@@ -1,7 +1,6 @@
 'use strict';
 
 const MongoClient = require('mongodb').MongoClient;
-const winston = require('winston');
 const uuid = require('uuid');
 const u = require('../utils');
 
@@ -59,5 +58,12 @@ function removePerson(req, res) {
 
 // TODO: Add paging later.
 function listPeople(req, res) {
-  res.send('listing people');
+  connectPromise
+    .then(db => {
+      return db.collection(COLLECTION_NAME)
+        .find()
+        .toArray();
+    })
+    .then(result => res.send(result))
+    .then(null, u.errorHandler(res));
 }
