@@ -6,7 +6,7 @@ import { ReduxRouter } from 'redux-router';
 import routes from './store/routes';
 import history from './store/history';
 import configureStore from './store/configureStore';
-import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
+// import { DevTools, DebugPanel, LogMonitor } from 'redux-devtools/lib/react';
 
 const store = configureStore({}, routes);
 
@@ -35,12 +35,14 @@ ReactDOM.render((
     <Provider store={ store }>
       <ReduxRouter />
     </Provider>
+    { /**
     <DebugPanel top right bottom>
       <DevTools
         store={ store }
         monitor={ LogMonitor }
         visibleOnLoad />
     </DebugPanel>
+    */ }
   </div>),
   document.getElementById('root')
 );
