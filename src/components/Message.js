@@ -69,7 +69,7 @@ const styles = {
     fontWeight: 'bold',
     color: '#FFFFFF',
     marginTop: 15,
-    float: 'right',
+    marginLeft: 10,
   },
   button: {
     backgroundColor: '#A276B7',
