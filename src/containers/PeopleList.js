@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as peopleActions from '../actions/people';
 import Radium from 'radium';
 import Message from '../components/Message';
+import RecurringMessageForm from '../components/RecurringMessageForm';
 
 function mapStateToProps(state) {
   return {
@@ -64,6 +65,14 @@ class PeopleList extends Component {
     this.props.deletePerson(id);
   }
 
+  _showMessageBox = (id) => {
+    return (
+      <div>
+        <RecurringMessageForm />
+        <Message personId={ id } />
+      </div>
+    );
+  }
   componentDidMount() {
     this._fetchPeople();
     window.setInterval(() => this._fetchPeople(), interval);
@@ -78,6 +87,7 @@ class PeopleList extends Component {
       props,
       _selectPerson,
       _deletePerson,
+      _showMessageBox,
     } = this;
 
     const rows = (props.people) ? props.people.map((person, index) => {
@@ -91,7 +101,7 @@ class PeopleList extends Component {
             x
           </div>
           { (person.get('_id') === props.selectedPerson) ? (
-              <Message personId={ person.get('_id')} />
+              _showMessageBox(person.get('_id'))
             ) : null
           }
         </li>
