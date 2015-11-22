@@ -7,6 +7,8 @@ export const LOGIN_USER_ERROR = 'App/LOGIN_USER_ERROR';
 
 export const LOGOUT_USER = 'App/LOGOUT_USER';
 
+export const SELECT_PERSON = 'App/SELECT_PERSON';
+
 export const GET_PEOPLE_PENDING = 'App/GET_PEOPLE_PENDING';
 export const GET_PEOPLE_SUCCESS = 'App/GET_PEOPLE_SUCCESS';
 export const GET_PEOPLE_ERROR = 'App/GET_PEOPLE_ERROR';
@@ -28,3 +30,7 @@ export const GET_MESSAGES_PENDING = 'App/GET_MESSAGES_PENDING';
 export const GET_MESSAGES_ERROR = 'App/GET_MESSAGES_ERROR';
 
 export const API_BASE_URL = '//break-poverty-hackathon.herokuapp.com/api';
+
+export const MESSAGE_PERSON_SUCCESS = 'App/MESSAGE_PERSON_SUCCESS';
+export const MESSAGE_PERSON_PENDING = 'App/MESSAGE_PERSON_PENDING';
+export const MESSAGE_PERSON_ERROR = 'App/MESSAGE_PERSON_ERROR';

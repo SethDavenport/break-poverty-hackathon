@@ -20,3 +20,11 @@ export function addPerson(person) {
       return person.merge({ _id: data._id });
     });
 }
+
+export function messagePerson(id, message) {
+  return axios
+    .post(`${ API_BASE_URL }/messages/byuser/${ id }`, message)
+    .then(() => ({
+      _id: id,
+    }));
+}

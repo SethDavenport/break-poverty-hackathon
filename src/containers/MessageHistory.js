@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as messageActions from '../actions/messages';
-import * as peopleActions from '../actions/people';
 import Radium from 'radium';
 import moment from 'moment';
 
@@ -20,7 +19,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     getMessagesForPerson: id => dispatch(messageActions.getMessagesForPerson(id)),
-    getPeople: () => dispatch(peopleActions.getPeople()),
   };
 }
 
@@ -33,12 +31,9 @@ class MessageHistory extends Component {
     userId: PropTypes.string.isRequired,
     messages: PropTypes.object.isRequired,
     getMessagesForPerson: PropTypes.func.isRequired,
-    getPeople: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
-    this.props.getPeople();
-
     this.props.getMessagesForPerson(this.props.userId);
 
     // Yuck: hack.
@@ -58,8 +53,8 @@ class MessageHistory extends Component {
     const sms = props.person ? props.person.sms : '';
     const rows = items ? items.map((message, index) => {
       return (
-        <div key={index} style={ styles.bubble(message.incoming) }>
-          <div>{message.text}</div>
+        <div key={ index } style={ styles.bubble(message.incoming) }>
+          <div>{ message.text.message || message.text }</div>
           <div style={ styles.dateStamp(message.incoming) }>
             { moment(message.date).fromNow() }
           </div>
@@ -68,7 +63,8 @@ class MessageHistory extends Component {
     }) : 'No messages found';
 
     return (
-      <div className="m2 border sm-col-12">
+      <div style={ styles.container }
+           className="m2 border sm-col-12">
         <h1 className="p1 border-bottom">
           Message History for { name } ({ sms })
         </h1>
@@ -81,6 +77,9 @@ class MessageHistory extends Component {
 }
 
 const styles = {
+  container: {
+    width: '95%',
+  },
   messageContainer: {
     display: 'flex',
     flexDirection: 'column',

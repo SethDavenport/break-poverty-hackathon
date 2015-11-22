@@ -1,6 +1,7 @@
 import { handleActions } from 'redux-actions';
 
 import {
+  SELECT_PERSON,
   GET_PEOPLE_PENDING,
   GET_PEOPLE_SUCCESS,
   GET_PEOPLE_ERROR,
@@ -10,12 +11,16 @@ import {
   ADD_PERSON_PENDING,
   ADD_PERSON_SUCCESS,
   ADD_PERSON_ERROR,
+  MESSAGE_PERSON_SUCCESS,
+  MESSAGE_PERSON_PENDING,
+  MESSAGE_PERSON_ERROR,
 } from '../constants';
 
 import { fromJS } from 'immutable';
 
 const INITIAL_STATE = fromJS({
   peopleList: [],
+  selectedPerson: null,
   hasError: false,
   isLoading: false,
 });
@@ -37,6 +42,10 @@ const errorState = (state) => state.merge({
 });
 
 const peopleReducer = handleActions({
+  [SELECT_PERSON]: (state, { payload }) => state.merge({
+    selectedPerson: (state.get('selectedPerson') === payload.personId) ?
+      null : payload.personId,
+  }),
   /** GET PEOPLE **/
   [GET_PEOPLE_PENDING]: pendingState,
   [GET_PEOPLE_SUCCESS]: successState.bind(null, ({ data }) => data),
@@ -53,12 +62,18 @@ const peopleReducer = handleActions({
 
   /** ADD PERSON **/
   [ADD_PERSON_PENDING]: pendingState,
-  [ADD_PERSON_SUCCESS]: successState.bind(null, ({ data }, state) => {
+  [ADD_PERSON_SUCCESS]: successState.bind(null, (newPerson, state) => {
     return state
       .get('peopleList')
-      .concat(data);
+      .push(newPerson);
   }),
   [ADD_PERSON_ERROR]: errorState,
+  /** MESSAGE PERSON **/
+  [MESSAGE_PERSON_PENDING]: pendingState,
+  [MESSAGE_PERSON_SUCCESS]: successState.bind(null, ({ _id }, state) => {
+    return state;
+  }),
+  [MESSAGE_PERSON_ERROR]: errorState,
 }, INITIAL_STATE);
 
 export default peopleReducer;

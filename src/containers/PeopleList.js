@@ -2,10 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as peopleActions from '../actions/people';
 import Radium from 'radium';
+import Message from '../components/Message';
 
 function mapStateToProps(state) {
   return {
     people: state.people.get('peopleList'),
+    selectedPerson: state.people.get('selectedPerson'),
   };
 }
 
@@ -13,20 +15,30 @@ function mapDispatchToProps(dispatch) {
   return {
     getPeople: () => dispatch(peopleActions.getPeople()),
     deletePerson: (id) => dispatch(peopleActions.deletePerson(id)),
+    selectPerson: (id) => dispatch(peopleActions.selectPerson(id)),
   };
 }
+
+const interval = 500;
 
 @Radium
 @connect(mapStateToProps, mapDispatchToProps)
 class PeopleList extends Component {
+
   static propTypes = {
+    selectedPerson: PropTypes.string,
     people: PropTypes.object.isRequired,
     getPeople: PropTypes.func.isRequired,
     deletePerson: PropTypes.func.isRequired,
+    selectPerson: PropTypes.func.isRequired,
   };
 
   static contextTypes = {
     history: PropTypes.object,
+  }
+
+  static defaultProps = {
+    selectedPerson: null,
   }
 
   _fetchPeople = () => {
@@ -42,26 +54,46 @@ class PeopleList extends Component {
     this.context.history.pushState(null, to);
   }
 
+  _selectPerson = (id, e) => {
+    e.stopPropagation();
+    this.props.selectPerson(id);
+  }
+
+  _deletePerson = (id, e) => {
+    e.stopPropagation();
+    this.props.deletePerson(id);
+  }
+
   componentDidMount() {
     this._fetchPeople();
+    window.setInterval(() => this._fetchPeople(), interval);
   }
 
   componentDidUpdate() {
-    this._fetchPeople();
+    window.setInterval(() => this._fetchPeople(), interval);
   }
 
   render() {
-    const { props } = this;
+    const {
+      props,
+      _selectPerson,
+      _deletePerson,
+    } = this;
 
     const rows = (props.people) ? props.people.map((person, index) => {
       return (
         <li style={ styles.person }
+            onClick={ _selectPerson.bind(null, person.get('_id'))}
             key={ index }>
           { person.get('name') }
           <div style={ styles.deleteButton }
-               onClick={ props.deletePerson.bind(null, person.get('_id'))}>
+               onClick={ _deletePerson.bind(null, person.get('_id'))}>
             x
           </div>
+          { (person.get('_id') === props.selectedPerson) ? (
+              <Message personId={ person.get('_id')} />
+            ) : null
+          }
         </li>
       );
     }) : 'No people found.';
@@ -108,9 +140,12 @@ const styles = {
   deleteButton: {
     backgroundColor: '#E25151',
     color: '#FFFFFF',
-    padding: '1px 2px',
+    width: 25,
+    height: 25,
+    textAlign: 'center',
     border: 'none',
-    fontFamily: 'Courier New',
+    borderRadius: '50%',
+    fontFamily: 'Arial',
     float: 'right',
     fontWeight: 'bold',
     cursor: 'pointer',
@@ -126,10 +161,11 @@ const styles = {
   person: {
     color: '#FFFFFF',
     fontFamily: 'Arial',
+    fontSize: 20,
     backgroundColor: '#83B2BB',
     lineHeight: 1,
     borderBottom: '1px solid #fff',
-    padding: 3,
+    padding: 10,
   },
   visible: {
     display: 'block',
