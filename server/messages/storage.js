@@ -23,7 +23,7 @@ function getMessageHistoryBySms(sms) {
     .then(db => {
       return db.collection(COLLECTION_NAME)
         .find({ sms: sms })
-        .sort({ date: -1 })
+        .sort({ date: 1 })
         .toArray();
     });
 }

@@ -22,3 +22,9 @@ export const DEL_PERSON_ERROR = 'App/DEL_PERSON_ERROR';
 export const ADD_PERSON_SUCCESS = 'App/ADD_PERSON_SUCCESS';
 export const ADD_PERSON_PENDING = 'App/ADD_PERSON_PENDING';
 export const ADD_PERSON_ERROR = 'App/ADD_PERSON_ERROR';
+
+export const GET_MESSAGES_SUCCESS = 'App/GET_MESSAGES_SUCCESS';
+export const GET_MESSAGES_PENDING = 'App/GET_MESSAGES_PENDING';
+export const GET_MESSAGES_ERROR = 'App/GET_MESSAGES_ERROR';
+
+export const API_BASE_URL = '//break-poverty-hackathon.herokuapp.com/api';

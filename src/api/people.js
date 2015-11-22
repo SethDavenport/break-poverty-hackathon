@@ -1,14 +1,13 @@
 import axios from 'axios';
-
-const domain = 'http://break-poverty-hackathon.herokuapp.com';
+import { API_BASE_URL } from '../constants';
 
 export function getPeople() {
-  return axios.get(`${ domain }/api/people`);
+  return axios.get(`${ API_BASE_URL }/people`);
 }
 
 export function deletePerson(id) {
   return axios
-    .delete(`${ domain }/api/people/${ id }`)
+    .delete(`${ API_BASE_URL }/people/${ id }`)
     .then(() => ({
       _id: id,
     }));
@@ -16,7 +15,7 @@ export function deletePerson(id) {
 
 export function addPerson(person) {
   return axios
-    .post(`${ domain }/api/people`, person)
+    .post(`${ API_BASE_URL }/people`, person)
     .then(({ data }) => {
       return person.merge({ _id: data._id });
     });

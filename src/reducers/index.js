@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
 import { routerStateReducer } from 'redux-router';
-import counter from './counter';
 import user from './user';
 import people from './people';
+import messages from './messages';
 
 const rootReducer = combineReducers({
   user,
-  counter,
   people,
+  messages,
   router: routerStateReducer,
 });
 
