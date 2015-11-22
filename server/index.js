@@ -1,12 +1,14 @@
 const path = require('path');
 const express = require('express');
 const winston = require('winston');
+const cors = require('cors');
 const people = require('./people/router');
 const messages = require('./messages/router');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(cors()); // remove before prod.
 app.use('/dist', express.static('dist'));
 
 // Serve the front end.
