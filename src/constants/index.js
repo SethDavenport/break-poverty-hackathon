@@ -7,6 +7,8 @@ export const LOGIN_USER_ERROR = 'App/LOGIN_USER_ERROR';
 
 export const LOGOUT_USER = 'App/LOGOUT_USER';
 
+export const SELECT_PERSON = 'App/SELECT_PERSON';
+
 export const GET_PEOPLE_PENDING = 'App/GET_PEOPLE_PENDING';
 export const GET_PEOPLE_SUCCESS = 'App/GET_PEOPLE_SUCCESS';
 export const GET_PEOPLE_ERROR = 'App/GET_PEOPLE_ERROR';

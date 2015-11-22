@@ -48,7 +48,8 @@ class LoginPage extends Component {
         <form onSubmit={ submitForm }>
 
           <div className="p1 border-bottom">
-            <h1>Login</h1>
+            <h1>Healthcare Assistant</h1>
+            <h3>Login</h3>
           </div>
 
           <div style={ errorStyles } className="bg-red white p1 bold">

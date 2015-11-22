@@ -6,6 +6,8 @@ import {
 } from '../api/people';
 
 import {
+  SELECT_PERSON,
+
   /** GET **/
   GET_PEOPLE_SUCCESS,
   GET_PEOPLE_PENDING,
@@ -26,6 +28,15 @@ import {
   MESSAGE_PERSON_PENDING,
   MESSAGE_PERSON_ERROR,
 } from '../constants';
+
+export function selectPerson(id) {
+  return {
+    type: SELECT_PERSON,
+    payload: {
+      personId: id,
+    },
+  };
+}
 
 export function getPeople() {
   return {

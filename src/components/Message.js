@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 import * as peopleActions from '../actions/people';
 
 function mapStateToProps(state) {
@@ -19,21 +20,25 @@ class Message extends Component {
     sendMessage: PropTypes.func.isRequired,
   };
 
-  _sendMessage = () => {
+  _sendMessage = (e) => {
+    e.stopPropagation();
     const messageText = this.refs.newMessage.value;
     this.props.sendMessage(this.props.personId, { message: messageText });
   }
 
   render() {
     const {
+      props,
       _sendMessage,
     } = this;
 
     return (
       <div style={ styles.base }>
-        <textarea rows="3"
+        <textarea style={ styles.textArea }
+                  rows="3"
                   cols="30"
-                  ref="newMessage">
+                  ref="newMessage"
+                  onClick={ (e) => e.stopPropagation() }>
         </textarea>
         <div className="p1">
           <button style={ styles.button }
@@ -42,6 +47,10 @@ class Message extends Component {
                   onClick={ _sendMessage }>
             Send
           </button>
+          <Link style={ styles.historyLink }
+                to={ `/person/${ props.personId }/history` }>
+            Messages history
+          </Link>
         </div>
       </div>
     );
@@ -51,6 +60,16 @@ class Message extends Component {
 
 const styles = {
   base: {
+  },
+  textArea: {
+    marginTop: 10,
+  },
+  historyLink: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    marginTop: 15,
+    float: 'right',
   },
   button: {
     backgroundColor: '#A276B7',
