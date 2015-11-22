@@ -29,16 +29,16 @@ function getPersonById(id) {
 }
 
 function upsertPerson(person) {
-  const id = person._id || uuid.v4();
+  person._id = person._id || uuid.v4();
   return getDb()
     .then(db => {
       return db.collection(COLLECTION_NAME).update(
-        { _id: id },
+        { _id: person._id },
         person,
         { upsert: true });
     })
     .then(result => {
-      return { _id: id };
+      return { _id: person._id };
     });
 }
 

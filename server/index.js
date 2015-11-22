@@ -4,6 +4,8 @@ const winston = require('winston');
 const cors = require('cors');
 const people = require('./people/router');
 const messages = require('./messages/router');
+const recurrences = require('./recurrences/router');
+const scheduler = require('./recurrences/scheduler');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,6 +21,7 @@ app.get('/', function(req, res) {
 // Serve the REST API.
 app.use('/api/people', people);
 app.use('/api/messages', messages);
+app.use('/api/recurrences', recurrences);
 
 app.listen(PORT, '0.0.0.0', function(err) {
   if (err) {
@@ -28,4 +31,6 @@ app.listen(PORT, '0.0.0.0', function(err) {
   }
 
   winston.info(`Listening at http://localhost:${ PORT }`);
+
+  scheduler.start();
 });
