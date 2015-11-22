@@ -1,20 +1,10 @@
 'use strict';
 
-const twilio = require('twilio');
 const moment = require('moment');
+const messageService = require('./service');
 const messageStorage = require('./storage');
 const peopleStorage = require('../people/storage');
 const u = require('../utils');
-
-const accountSid = process.env.TWILIO_SID;
-const authToken = process.env.TWILIO_TOKEN;
-const senderNumber = process.env.TWILIO_SENDER_NUMBER;
-
-if (!accountSid) throw new Error('process.env.TWILIO_SID not set');
-if (!authToken) throw new Error('process.env.TWILIO_TOKEN not set');
-if (!senderNumber) throw new Error('process.env.TWILIO_SENDER_NUMBER not set');
-
-var client = twilio(accountSid, authToken);
 
 module.exports = {
   sendMessageToUser: sendMessageToUser,
@@ -26,20 +16,7 @@ function sendMessageToUser(req, res) {
   u.assertRequired(req.params, 'id')
     .then(() => u.assertRequired(req.body, 'message'))
     .then(() => peopleStorage.getPersonById(req.params.id))
-    .then(person => {
-      client.messages.create({
-        from: senderNumber,
-        to: person.sms,
-        body: req.body.message
-      });
-      return person;
-    })
-    .then((person) => messageStorage.saveMessage({
-      sms: person.sms,
-      date: moment().format(),
-      text: req.body.message,
-      incoming: false
-    }))
+    .then(person => messageService.processOutgoingMessage(req.body.message, person.sms))
     .then(message => res.status(201).send(''))
     .then(null, u.errorHandler(res));
 };

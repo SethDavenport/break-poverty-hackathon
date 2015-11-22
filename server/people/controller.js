@@ -1,7 +1,6 @@
 'use strict';
 
 const MongoClient = require('mongodb').MongoClient;
-const uuid = require('uuid');
 const u = require('../utils');
 const storage = require('./storage');
 
@@ -24,7 +23,7 @@ function upsertPerson(req, res) {
   u.assertRequired(req.body, 'name')
     .then(() => u.assertRequired(req.body, 'sms'))
     .then(() => storage.upsertPerson({
-      _id: req.body._id || uuid.v4(),
+      _id: req.body._id,
       name: req.body.name,
       sms: req.body.sms,
       details: req.body.details || {}
