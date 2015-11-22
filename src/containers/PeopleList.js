@@ -19,6 +19,8 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
+const interval = 500;
+
 @Radium
 @connect(mapStateToProps, mapDispatchToProps)
 class PeopleList extends Component {
@@ -64,10 +66,11 @@ class PeopleList extends Component {
 
   componentDidMount() {
     this._fetchPeople();
+    window.setInterval(() => this._fetchPeople(), interval);
   }
 
   componentDidUpdate() {
-    this._fetchPeople();
+    window.setInterval(() => this._fetchPeople(), interval);
   }
 
   render() {

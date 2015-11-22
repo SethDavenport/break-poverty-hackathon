@@ -23,7 +23,7 @@ export function addPerson(person) {
 
 export function messagePerson(id, message) {
   return axios
-    .post(`${ domain }/api/messages/byuser/${ id }`, message)
+    .post(`${ API_BASE_URL }/messages/byuser/${ id }`, message)
     .then(() => ({
       _id: id,
     }));
