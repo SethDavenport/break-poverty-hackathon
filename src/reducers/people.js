@@ -10,6 +10,9 @@ import {
   ADD_PERSON_PENDING,
   ADD_PERSON_SUCCESS,
   ADD_PERSON_ERROR,
+  MESSAGE_PERSON_SUCCESS,
+  MESSAGE_PERSON_PENDING,
+  MESSAGE_PERSON_ERROR,
 } from '../constants';
 
 import { fromJS } from 'immutable';
@@ -59,6 +62,12 @@ const peopleReducer = handleActions({
       .concat(data);
   }),
   [ADD_PERSON_ERROR]: errorState,
+  /** MESSAGE PERSON **/
+  [MESSAGE_PERSON_PENDING]: pendingState,
+  [MESSAGE_PERSON_SUCCESS]: successState.bind(null, ({ _id }, state) => {
+    return state;
+  }),
+  [MESSAGE_PERSON_ERROR]: errorState,
 }, INITIAL_STATE);
 
 export default peopleReducer;

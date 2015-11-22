@@ -2,6 +2,7 @@ import {
   getPeople as _getPeople,
   deletePerson as _deletePerson,
   addPerson as _addPerson,
+  messagePerson as _messagePerson,
 } from '../api/people';
 
 import {
@@ -19,6 +20,11 @@ import {
   ADD_PERSON_SUCCESS,
   ADD_PERSON_PENDING,
   ADD_PERSON_ERROR,
+
+  /** SEND MESSAGE **/
+  MESSAGE_PERSON_SUCCESS,
+  MESSAGE_PERSON_PENDING,
+  MESSAGE_PERSON_ERROR,
 } from '../constants';
 
 export function getPeople() {
@@ -56,6 +62,19 @@ export function addPerson(person) {
     ],
     payload: {
       promise: _addPerson(person),
+    },
+  };
+}
+
+export function messagePerson(id, message) {
+  return {
+    types: [
+      MESSAGE_PERSON_SUCCESS,
+      MESSAGE_PERSON_PENDING,
+      MESSAGE_PERSON_ERROR,
+    ],
+    payload: {
+      promise: _messagePerson(id, message),
     },
   };
 }

@@ -28,3 +28,7 @@ export const GET_MESSAGES_PENDING = 'App/GET_MESSAGES_PENDING';
 export const GET_MESSAGES_ERROR = 'App/GET_MESSAGES_ERROR';
 
 export const API_BASE_URL = '//break-poverty-hackathon.herokuapp.com/api';
+
+export const MESSAGE_PERSON_SUCCESS = 'App/MESSAGE_PERSON_SUCCESS';
+export const MESSAGE_PERSON_PENDING = 'App/MESSAGE_PERSON_PENDING';
+export const MESSAGE_PERSON_ERROR = 'App/MESSAGE_PERSON_ERROR';

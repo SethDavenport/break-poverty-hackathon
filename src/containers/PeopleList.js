@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as peopleActions from '../actions/people';
 import Radium from 'radium';
+import Message from '../components/Message';
 
 function mapStateToProps(state) {
   return {
@@ -62,6 +63,7 @@ class PeopleList extends Component {
                onClick={ props.deletePerson.bind(null, person.get('_id'))}>
             x
           </div>
+          <Message personId={ person.get('_id')} />
         </li>
       );
     }) : 'No people found.';
