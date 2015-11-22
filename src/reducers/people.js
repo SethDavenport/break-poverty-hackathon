@@ -53,11 +53,11 @@ const peopleReducer = handleActions({
 
   /** ADD PERSON **/
   [ADD_PERSON_PENDING]: pendingState,
-  [ADD_PERSON_SUCCESS]: successState.bind(null, ({ data }, state) =>
-    state
+  [ADD_PERSON_SUCCESS]: successState.bind(null, ({ data }, state) => {
+    return state
       .get('peopleList')
-      .concat(data)
-  ),
+      .concat(data);
+  }),
   [ADD_PERSON_ERROR]: errorState,
 }, INITIAL_STATE);
 

@@ -25,12 +25,29 @@ class PeopleList extends Component {
     deletePerson: PropTypes.func.isRequired,
   };
 
-  componentDidMount() {
+  static contextTypes = {
+    history: PropTypes.object,
+  }
+
+  _fetchPeople = () => {
     const { props } = this;
 
     if (props.people.size === 0) {
       props.getPeople();
     }
+  }
+
+  _addPerson = () => {
+    const to = '/person/add';
+    this.context.history.pushState(null, to);
+  }
+
+  componentDidMount() {
+    this._fetchPeople();
+  }
+
+  componentDidUpdate() {
+    this._fetchPeople();
   }
 
   render() {
@@ -51,7 +68,14 @@ class PeopleList extends Component {
 
     return (
       <div className="m2 sm-col-12" style={ styles.base }>
-        <ul>
+        <span style={ styles.label }>
+          Patients
+        </span>
+        <button style={ styles.addButton }
+                onClick={ this._addPerson }>
+          Add Patient
+        </button>
+        <ul style={ styles.peopleList }>
           { rows }
         </ul>
       </div>
@@ -62,6 +86,24 @@ class PeopleList extends Component {
 const styles = {
   base: {
     width: '80%',
+  },
+  label: {
+    color: '#83B2BB',
+    fontSize: 20,
+    fontFamily: 'Arial',
+    fontWeight: 'bold',
+    margin: '10px 0px 5px 10px',
+    display: 'inline-block',
+  },
+  addButton: {
+    display: 'block',
+    float: 'right',
+    backgroundColor: '#56A7DA',
+    borderRadius: 10,
+    color: '#FFFFFF',
+    fontSize: 17,
+    fontWeight: 'bold',
+    margin: '10px 0 10px 0',
   },
   deleteButton: {
     backgroundColor: '#E25151',
@@ -78,6 +120,8 @@ const styles = {
   },
   peopleList: {
     listStyleTyle: 'none',
+    padding: 0,
+    margin: '10px 0px 0px 10px',
   },
   person: {
     color: '#FFFFFF',
